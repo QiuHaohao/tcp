@@ -5,6 +5,8 @@ TCP server and client created for communication between Rpi and PC over Wi-Fi in
 ## Usage
 The module includes two classes: `TCPServer` and `TCPClient`. Both classes provides the same set of methods (`send`, `recv`, `init_connection`, `reset_connection` and `is_connected`) . The only difference is that the `TCPServer` should start listen by calling `init_connection` for incoming connection first before `TCPClient` attempts to `init_connection`. `TCPServer` connects with the first incoming connection it listens. Once the connection is established, string messages can be sent and received between the `TCPServer` and `TCPClient`.
 
+In MDP, the rpi should be using `TCPServer` and the PC should be using `TCPClient`.
+
 The follows is an example of using this module from a script under the folder containing this module:
 
 ```
