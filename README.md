@@ -15,6 +15,8 @@ src/
     tcp
 ```
 ```python
+# server.py
+
 import time
 from tcp import TCPServer
 
@@ -41,6 +43,8 @@ src/
 ```
 
 ```python
+# client.py
+
 import time
 from tcp import TCPClient
 
