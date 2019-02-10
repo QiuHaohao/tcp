@@ -1,2 +1,2 @@
-from TCPServer import TCPServer
-from TCPClient import TCPClient
+from .TCPServer import TCPServer
+from .TCPClient import TCPClient

@@ -1,5 +1,5 @@
 import socket
-from TCPTransmitter import TCPTransmitter
+from .TCPTransmitter import TCPTransmitter
 
 class TCPServer(TCPTransmitter):
     def __init__(self, *args):

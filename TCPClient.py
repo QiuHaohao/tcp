@@ -1,5 +1,5 @@
 import socket
-from TCPTransmitter import TCPTransmitter
+from .TCPTransmitter import TCPTransmitter
 
 class TCPClient(TCPTransmitter):
     def __init__(self, *args):
@@ -8,7 +8,7 @@ class TCPClient(TCPTransmitter):
 
     def _setup_connection(self):
         self.socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        print ("Trying to connect to rpi")
+        print ("Trying to connect to server")
         self.socket.connect((self.ip, self.port))
         print ("Connected! Connection address: ",self.socket)
 
