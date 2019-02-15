@@ -17,20 +17,28 @@ class TCPClient(TCPTransmitter):
             self.socket.close()
             print ("Closed client socket")
 
-    def _send(self, s):
-        return self.socket.send(str(s+'\n').encode('UTF-8'))
+    def _send(self, bytes):
+        return self.socket.send(bytes)
 
     def _recv(self):
-    	return self.socket.recv(1024).decode('utf-8')
+        BUFF_SIZE = 1024
+        data = b''
+        while True:
+            part = self.socket.recv(BUFF_SIZE)
+            data += part
+            if len(part) < BUFF_SIZE:
+                break
+        return data
 
 if __name__ == "__main__":
     import time
+    import os
     c = TCPClient("localhost", 50000)
     c.init_connection()
-    n = 0
-    while n < 5000:
-        c.send(str(n))
-        n += 1
+    while True:
+        b = os.urandom(300)
+        c.send(b)
+        print("Client sent: {}".format(b))
         msg = c.recv()
-        print("Received: {}".format(msg))
+        print("Client received: {}".format(msg))
         time.sleep(1)

@@ -27,22 +27,30 @@ class TCPServer(TCPTransmitter):
             self.client.close()
             print ("Closed client socket")
 
-    def _send(self, s):
-        return self.client.sendto(str(s+'\n').encode('UTF-8'), self.addr)
+    def _send(self, bytes):
+        return self.client.sendto(bytes, self.addr)
 
     def _recv(self):
-        return self.client.recv(1024).decode('utf-8')
+        BUFF_SIZE = 1024
+        data = b''
+        while True:
+            part = self.client.recv(BUFF_SIZE)
+            data += part
+            if len(part) < BUFF_SIZE:
+                break
+        return data
 
 if __name__ == "__main__":
     import time
+    import os
     s = TCPServer("localhost", 50000)
     s.init_connection()
-    n = 0
-    while n < 5000:
-        s.send(str(n))
-        n += 1
+    while True:
+        b = os.urandom(300)
+        s.send(b)
+        print("Server sent: {}".format(b))
         msg = s.recv()
-        print("Received: {}".format(msg))
+        print("Server received: {}".format(msg))
         time.sleep(1)
 
 

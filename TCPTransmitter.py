@@ -5,7 +5,7 @@ class TCPTransmitter(object):
         self.ip = ip
         self.port = port
         self.is_connected = False
-        self.buffer = ''
+        self.buffer = []
 
     def is_connected(self):
         return self.is_connected
@@ -28,24 +28,31 @@ class TCPTransmitter(object):
         self.close_connection()
         self.init_connection()
 
-    def send(self, message):
+    def send(self, bytes):
         try:
-            self._send(message)
+            self._send(bytes)
         except Exception as e:
             print ("\nPC Write Error: %s " % str(e))
             self.reset_connection()
 
     def recv(self):
         try:
-            while not '\n' in self.buffer:
-                self.buffer += self._recv()
-            if '\r\n' in self.buffer:
-                line, self.buffer = self.buffer.split('\r\n', 1)
-            else:
-                line, self.buffer = self.buffer.split('\n', 1)
-            return line
+            bytes_recved = self._recv()
+            print(bytes_recved)
+            return bytes_recved
         except KeyboardInterrupt:
             sys.exit()
         except Exception as e:
             print ("\nPC Read Error: %s " % str(e))
             self.reset_connection()
+
+def recvall(sock):
+    BUFF_SIZE = 4096 # 4 KiB
+    data = b''
+    while True:
+        part = sock.recv(BUFF_SIZE)
+        data += part
+        if len(part) < BUFF_SIZE:
+            # either 0 or end of data
+            break
+    return data
