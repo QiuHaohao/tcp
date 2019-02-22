@@ -33,7 +33,7 @@ class TCPClient(TCPTransmitter):
 if __name__ == "__main__":
     import time
     import os
-    c = TCPClient("localhost", 50000)
+    c = TCPClient("192.168.5.5", 50000)
     c.init_connection()
     while True:
         b = os.urandom(300)
