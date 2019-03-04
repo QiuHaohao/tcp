@@ -14,7 +14,10 @@ class TCPServer(TCPTransmitter):
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
         self.socket.bind((self.ip,self.port))
         self.socket.listen(1)
-        print ("Listening for incoming connections...")
+        print (
+            "Listening for incoming TCP connections on port {}, server IP: {}..."
+            .format(self.port, self.ip)
+        )
 
         (self.client, self.addr) = self.socket.accept()
         print ("Connected! Connection address: ",self.addr)
