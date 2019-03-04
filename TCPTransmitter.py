@@ -20,7 +20,7 @@ class TCPTransmitter(object):
             sys.exit()
         except Exception as e:
             print ("\nError: %s" % str(e))
-            self.reset_connection()
+            self.close_connection()
 
     def close_connection(self):
         self._close_connection()
