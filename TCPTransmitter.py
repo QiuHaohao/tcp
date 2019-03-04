@@ -15,10 +15,12 @@ class TCPTransmitter(object):
             self._setup_connection()
             self.is_connected = True
         except KeyboardInterrupt:
-            sys.exit()
             print ("Connection closed")
+            self.close_connection()
+            sys.exit()
         except Exception as e:
             print ("\nError: %s" % str(e))
+            self.reset_connection()
 
     def close_connection(self):
         self._close_connection()
