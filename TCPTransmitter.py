@@ -1,7 +1,7 @@
 import sys
 
 class TCPTransmitter(object):
-    def __init__(self, ip="localhost", port=50000):
+    def __init__(self, ip="192.168.5.5", port=50000):
         self.ip = ip
         self.port = port
         self.is_connected = False
