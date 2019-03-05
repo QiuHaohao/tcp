@@ -40,7 +40,6 @@ class TCPTransmitter(object):
     def recv(self):
         try:
             bytes_recved = self._recv()
-            print(bytes_recved)
             return bytes_recved
         except KeyboardInterrupt:
             sys.exit()
