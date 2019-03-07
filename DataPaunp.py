@@ -52,7 +52,6 @@ class DataPaunp:
                     or all_equal(byte_cur, byte_next, self.byte_ending):
                     i += 1
                 elif byte_cur == self.byte_ending:
-                    print(i)
                     i += 2
                     unpacked_data.append(b'')
                     continue
