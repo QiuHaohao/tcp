@@ -46,7 +46,7 @@ class TCPServer(TCPTransmitter):
 if __name__ == "__main__":
     import time
     import os
-    s = TCPServer("192.168.5.5", 50000)
+    s = TCPServer("localhost", 50000)
     s.init_connection()
     while True:
         b = os.urandom(300)

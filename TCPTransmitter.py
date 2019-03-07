@@ -1,11 +1,14 @@
+import queue
 import sys
+from .DataPaunp import DataPaunp
 
 class TCPTransmitter(object):
     def __init__(self, ip="192.168.5.5", port=50000):
         self.ip = ip
         self.port = port
         self.is_connected = False
-        self.buffer = []
+        self.buffer = queue.Queue()
+        self.dpu = DataPaunp()
 
     def is_connected(self):
         return self.is_connected
@@ -32,12 +35,21 @@ class TCPTransmitter(object):
 
     def send(self, bytes):
         try:
-            self._send(bytes)
+            bytes_packed = self.dpu.pack(bytes)
+            self._send(bytes_packed)
         except Exception as e:
             print ("\nPC Write Error: %s " % str(e))
             self.reset_connection()
 
     def recv(self):
+        if self.buffer.empty():
+            bytes_recved = self._recv_and_buffer()
+            msgs_recved = self.dpu.unpack(bytes_recved)
+            for msg in msgs_recved:
+                self.buffer.put(msg)
+        return self.buffer.get()
+
+    def _recv_and_buffer(self):
         try:
             bytes_recved = self._recv()
             return bytes_recved
