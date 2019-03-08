@@ -42,8 +42,10 @@ class TCPTransmitter(object):
             self.reset_connection()
 
     def recv(self):
-        if self.buffer.empty():
+        while self.buffer.empty():
             bytes_recved = self._recv_and_buffer()
+            if not bytes_recved:
+                continue
             msgs_recved = self.dpu.unpack(bytes_recved)
             for msg in msgs_recved:
                 self.buffer.put(msg)
